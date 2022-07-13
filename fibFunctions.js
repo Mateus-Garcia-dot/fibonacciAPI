@@ -6,11 +6,21 @@ function fib(position, memo = {}){
     return memo[position]
 }
 
+
+// returns a null if overflowed
 function fibSequence(position){
     let memo = {}
     let sequence = []
-    for (let i = 0; i < position; i++) {
-        sequence.push(fib(i,memo))
+    let num;
+    for (let i = 0; i <= position; i++) {
+        num = fib(i,memo)
+        if ( !isFinite(num) ){
+            sequence.push(null)
+            break
+        }
+        sequence.push(num)
     }
     return sequence
 }
+
+module.exports = {fib, fibSequence }
