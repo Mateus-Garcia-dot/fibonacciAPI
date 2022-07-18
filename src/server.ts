@@ -1,12 +1,11 @@
-const {fib, fibSequence }= require("./fibFunctions")
 const express = require('express')
 const app = express()
 
 app.listen('3000')
 
 app.route('/sequence').get( (req,res) => {
-    const quantity = Number.parseInt(req.query.quantity)
-    if ( isNaN(quantity) ){
+    const quantity = req.query.quantity
+    if ( !Number.isInteger(quantity) ){
         res.send({
             "message": "You need to provide a quantity",
             "example": "/sequence?quantity=20"
@@ -23,8 +22,8 @@ app.route('/sequence').get( (req,res) => {
 })
 
 app.route('/number').get( (req,res) => {
-    const position = Number.parseInt(req.query.position)
-    if ( isNaN(position) ){
+    const position = req.query.position
+    if ( !Number.isInteger(position) ){
         res.send({
             "message": "You need to provide a position",
             "example": "/sequence?position=20"
@@ -35,5 +34,5 @@ app.route('/number').get( (req,res) => {
         res.send({"message": "position cant be less than zero"})
         return
     }
-    res.send(fib(position).toString())
+    res.send( fib(position) )
 })
